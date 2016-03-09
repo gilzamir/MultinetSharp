@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Multinet.Math;
 
-namespace Multinet.Net
+namespace Multinet.Net.Impl
 {
     public class Beer1995Neuron : ANeuronImpl
     {
