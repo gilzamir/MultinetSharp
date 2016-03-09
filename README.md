@@ -1,3 +1,2 @@
-Homeostat Project is a prototype of continues time recurrent neural network with homeostatic properties.
-
-For more information, contact me: gilzamir@gmail.com
+Sharp Multinet is an implementation of neural network based on C #.
+For more information, contact me: gilzamir@outlook.com
