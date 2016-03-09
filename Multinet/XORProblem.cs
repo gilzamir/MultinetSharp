@@ -4,6 +4,7 @@ using System.Linq;
 using Multinet.Net;
 using Multinet.Genetic;
 using Multinet.Utils;
+using Multinet.Net.Impl;
 
 namespace Multinet.Sample
 {
@@ -70,10 +71,10 @@ namespace Multinet.Sample
         public XORProblem()
         {
             genetic = new GeneticA(200);
-            genetic.Elitism = 0;
-            genetic.SurvivalRate = 0.90;
-            genetic.MutationRate = 0.00005;
-            genetic.MinPopulationSize = 150;
+            genetic.Elitism = 1;
+            genetic.SurvivalRate = 0.8;
+            genetic.MutationRate = 0.0005;
+            genetic.MinPopulationSize = 200;
 
             Random rnd = new Random();
 
@@ -112,6 +113,11 @@ namespace Multinet.Sample
                 ne2.Implementation = new Beer1995Neuron();
                 ne3.Implementation = new Beer1995Neuron();
 
+                //ne1.Implementation = new HNeuron();
+                //ne2.Implementation = new HNeuron();
+                //ne3.Implementation = new HNeuron();
+
+
                 Chromossome cr = gen.GetChromossome(0);
 
                 net.CreateSynapse(n1, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(0))-30);
@@ -149,11 +155,11 @@ namespace Multinet.Sample
 
         public void Run()
         {
-            int maxGen = 10;
+            int maxGen = 50;
 
             double[] statistic = { double.MaxValue, double.MinValue, 0.0 };
             genetic.init();
-            for (int i = 0; i < maxGen; i++)
+            for (int i = 0; i < maxGen && statistic[1] < 3.99; i++)
             {
                 List<Genome> pop = genetic.Population;
                 genetic.InitEvaluation(statistic);
