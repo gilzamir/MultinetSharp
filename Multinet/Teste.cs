@@ -5,6 +5,7 @@ using Multinet.Math;
 using Multinet.Genetic;
 using Multinet.Utils;
 using Multinet.Sample;
+using Multinet.Net.Impl;
 
 class OneNet : Net
 {
