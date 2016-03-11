@@ -71,7 +71,7 @@ namespace Multinet.Sample
         public XORProblem()
         {
             genetic = new GeneticA(200);
-            genetic.Elitism = 1;
+            genetic.Elitism = 0;
             genetic.SurvivalRate = 0.8;
             genetic.MutationRate = 0.0005;
             genetic.MinPopulationSize = 200;
@@ -116,8 +116,7 @@ namespace Multinet.Sample
                 //ne1.Implementation = new HNeuron();
                 //ne2.Implementation = new HNeuron();
                 //ne3.Implementation = new HNeuron();
-
-
+                
                 Chromossome cr = gen.GetChromossome(0);
 
                 net.CreateSynapse(n1, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(0))-30);
@@ -159,7 +158,10 @@ namespace Multinet.Sample
 
             double[] statistic = { double.MaxValue, double.MinValue, 0.0 };
             genetic.init();
-            for (int i = 0; i < maxGen && statistic[1] < 3.99; i++)
+
+
+            int current = 0;
+            while(true)
             {
                 List<Genome> pop = genetic.Population;
                 genetic.InitEvaluation(statistic);
@@ -175,12 +177,17 @@ namespace Multinet.Sample
                 }
                 genetic.EndEvaluation(statistic);
 
-                
+
                 Console.WriteLine("GER({0}) :: Fitness(Min, Max, Avg)=({1}, {2}, {3})",
-                    i, statistic[0], statistic[1], statistic[2]/pop.Count);
+                current, statistic[0], statistic[1], statistic[2] / pop.Count);
 
+                current++;
+                
+                if (current >= maxGen || statistic[1] >= 3.99) 
+                {
 
-                if (i < maxGen-1)
+                    break;
+                } else
                 {
                     uint survivors = genetic.NextGeneration(statistic);
 
@@ -188,7 +195,7 @@ namespace Multinet.Sample
                     {
                         Console.WriteLine("População Extinta");
                         break;
-                    }
+                    }                    
                 }
             }
 
@@ -196,9 +203,11 @@ namespace Multinet.Sample
             if (q > 0)
             {
                 genetic.Population.Sort();
-                Genome better = genetic.Population.ElementAt(q - 1);
+                
+                Genome better = genetic.Population.ElementAt(q-1);
                 NeuralNet bnet = (NeuralNet)genetic.Translator(better);
-                System.Console.WriteLine(bnet);
+                Console.WriteLine("Synapses: ");
+                Console.WriteLine(bnet);
                 evaluator.LogEnabled = true;
                 Console.WriteLine("FITNESS: {0}", evaluator.evaluate(bnet));
             }
