@@ -9,14 +9,30 @@ namespace Multinet.Net
 {
     public abstract class ANeuronImpl : INeuronImpl
     {
-        Dictionary<string, double> doubleVars;
+        private Dictionary<string, double> doubleVars;
         private Dictionary<String, Function> functions;
+        private bool useNumericalMethod;
 
         public ANeuronImpl()
         {
+            useNumericalMethod = true;
             doubleVars = new Dictionary<string, double>();
             functions = new Dictionary<string, Function>();
         }
+
+        public bool UseNumericalMethod
+        {
+            get
+            {
+                return this.useNumericalMethod;
+            }
+
+            set
+            {
+                this.useNumericalMethod = value;
+            }
+        }
+
 
         public double this[string var]
         {

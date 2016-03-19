@@ -125,7 +125,13 @@ namespace Multinet.Net
 
         public double Proccess()
         {
-            return  (state = net.NumericalMethod.nextState(state, onestep));    
+            if (Implementation.UseNumericalMethod)
+            {
+                return (state = net.NumericalMethod.nextState(state, onestep));
+            } else
+            {
+                return (state = onestep(state));
+            }    
         }
 
         public INeuronImpl Implementation

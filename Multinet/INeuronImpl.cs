@@ -15,6 +15,13 @@ namespace Multinet.Net
     public interface INeuronImpl
     {
 
+
+        bool UseNumericalMethod
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// This method returns a function named (<code>funcname</code>).
         /// </summary>

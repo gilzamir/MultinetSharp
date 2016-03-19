@@ -61,7 +61,7 @@ namespace Multinet.Net.Impl
             target.SensorValue = 0;
             double iw = this["inputweight"];
             double sw = this["sensorweight"];
-            return (-(state - this["stateshift"]) + s * iw + sensorValue * sw) / target.TimeConst;
+            return (-(state - this["stateshift"]) +  (s * iw + sensorValue * sw)) / target.TimeConst;
         }
     }
 }

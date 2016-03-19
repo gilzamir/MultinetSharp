@@ -71,7 +71,7 @@ namespace Multinet.Sample
         public XORProblem()
         {
             genetic = new GeneticA(200);
-            genetic.Elitism = 0;
+            genetic.Elitism = 1;
             genetic.SurvivalRate = 0.8;
             genetic.MutationRate = 0.0005;
             genetic.MinPopulationSize = 200;
@@ -100,7 +100,7 @@ namespace Multinet.Sample
             {
                 NeuralNet net = new NeuralNet();
 
-
+                net.NumericalMethod = new Math.Impl.RungeKuttaMethod();
                 int n1 = net.CreateNeuron();
                 int n2 = net.CreateNeuron();
                 int n3 = net.CreateNeuron();
@@ -109,19 +109,20 @@ namespace Multinet.Sample
                 Neuron ne2 = net[n2];
                 Neuron ne3 = net[n3];
 
-                ne1.Implementation = new Beer1995Neuron();
-                ne2.Implementation = new Beer1995Neuron();
-                ne3.Implementation = new Beer1995Neuron();
+               // ne1.Implementation = new Beer1995Neuron();
+                //ne2.Implementation = new Beer1995Neuron();
+                //ne3.Implementation = new Beer1995Neuron();
 
-                //ne1.Implementation = new HNeuron();
-                //ne2.Implementation = new HNeuron();
-                //ne3.Implementation = new HNeuron();
+                ne1.Implementation = new HNeuron();
+                ne2.Implementation = new HNeuron();
+                ne3.Implementation = new HNeuron();
                 
                 Chromossome cr = gen.GetChromossome(0);
 
                 net.CreateSynapse(n1, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(0))-30);
                 net.CreateSynapse(n2, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(1))-30);
-                
+
+                ne1.Implementation.UseNumericalMethod = false;
                 ne1.Implementation["inputgain"] = 1.0;
                 ne1.Implementation["outputgain"] = 1.0;
                 ne1.Implementation["inputweight"] = 0.0;
@@ -129,6 +130,7 @@ namespace Multinet.Sample
                 ne1.TimeConst = 10 * BitArrayUtils.ToNDouble(cr.GetGene(2)) + 0.001;
                 ne1.Implementation["bias"] = 200 * BitArrayUtils.ToNDouble(cr.GetGene(3)) - 100;
 
+                ne2.Implementation.UseNumericalMethod = false;
                 ne2.Implementation["inputgain"] = 1.0;
                 ne2.Implementation["outputgain"] = 1.0;
                 ne2.Implementation["inputweight"] = 0.0;
@@ -145,11 +147,9 @@ namespace Multinet.Sample
                 ne3.Implementation["bias"] = 200 * BitArrayUtils.ToNDouble(cr.GetGene(7)) - 100;
 
                  net.NumericalMethod["step"] = 4.0 * BitArrayUtils.ToNDouble(cr.GetGene(8)) + 0.05;
-               // net.NumericalMethod["step"] = 2.0;
-                // Console.WriteLine(net);
                 return net;
             };
-            genetic.MinPopulationSize = 5;
+
         }
 
         public void Run()

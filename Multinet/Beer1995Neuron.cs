@@ -57,7 +57,7 @@ namespace Multinet.Net.Impl
 
             double sensorValue = target.SensorValue;
             target.SensorValue = 0;
-            return (-state  + s * iw + sensorValue * sw + nnet.RestInput)/ target.TimeConst;
+            return (-state  + (s * iw + sensorValue * sw + nnet.RestInput))/ target.TimeConst;
         }
     }
 }

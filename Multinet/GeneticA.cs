@@ -17,7 +17,6 @@ namespace Multinet.Genetic
         private double survivalRate;
         private uint minPopulationSize;
         private bool selectDuplicatedGenome;
-        private bool randomizedSelection;
         private int elitism;
         private Random rnd = new Random();
 
@@ -30,7 +29,6 @@ namespace Multinet.Genetic
             this.minPopulationSize = 0;
             this.elitism = 2;
             this.selectDuplicatedGenome = false;
-            this.randomizedSelection = false;
             InitializeDefaultBehavior();
         }
 
@@ -47,18 +45,6 @@ namespace Multinet.Genetic
             }
         }
 
-        public bool RandomizedSelection
-        {
-            get
-            {
-                return this.randomizedSelection;
-            }
-
-            set
-            {
-                randomizedSelection = value;
-            }
-        }
 
         public bool SelectDuplicatedGenome
         {
@@ -240,9 +226,10 @@ namespace Multinet.Genetic
             List<Genome> children = new List<Genome>();
             int n = genomes.Count();
 
+            genomes.Sort();
+
             if (elitism > 0)
             {
-                genomes.Sort();
                 int added = 0;
                 for (int i = n - 1; i >= 0 && added < elitism; i--)
                 {
@@ -251,104 +238,57 @@ namespace Multinet.Genetic
                 }
             }
 
-            int survivors = (int)(n * survivalRate);
+            int survivors = (int)(populationSize * survivalRate);
 
-            Random rndSelect = new Random();
-            Random indicesSelection = new Random();
-            Dictionary<int, int> dicIndices = new Dictionary<int, int>();
-            Console.WriteLine("SURVIVORS: {0}", survivors);
-            for (int i = 0; i < n; i++)
+            Random roulet = new Random();
+
+            Dictionary<int, int> selected = new Dictionary<int, int>();
+            //Console.WriteLine("SURVIVORS: {0}", survivors);
+
+            int q = 0;
+            while (q < survivors)
             {
-                int idx;
-
-                if (RandomizedSelection)
+                double pos = roulet.NextDouble();
+                double region = 0;
+                for (int i = 0; i < n; i++)
                 {
-                    if (selectDuplicatedGenome)
-                    {
-                        idx = indicesSelection.Next(n);
-                    }
-                    else
-                    {
-                        do
-                        {
-                            idx = indicesSelection.Next(n);
-                        } while (dicIndices.ContainsKey(idx));
+                    Genome current = genomes[i];
+                    region += (current.Value / statistic[2]);
 
-                        dicIndices[idx] = idx;
-                    }
+                    if (pos <= region && !selected.ContainsKey(i))
+                    {
+                        selected[i] = i;
+                        parents.Add(current);
+                        q++;
+                        break;
+                    } 
                 }
-                else
-                {
-                    idx = i;
-                }
-                Genome gen = genomes.ElementAt(idx);
-
-                double d = statistic[2];
+                //System.Console.WriteLine("COMP {0}      {1}", position, region);
                 
-                if (d > 0)
-                {
-                    double p = gen.Value/d;
-                    System.Console.WriteLine("PROB: {0}; FITNESS: {1}", p, gen.Value);
-                    if (rndSelect.NextDouble() <= p && parents.Count() < survivors)
-                    {
-                        parents.Add(gen);
-                    }
-                } else if (d==0)
-                {
-                    if (parents.Count() < survivors)
-                    {
-                        parents.Add(gen);
-                    }
-                }
             }
+
 
             parents.Sort();
             n = parents.Count();
-           // System.Console.WriteLine("PARENTS SIZE: {0}", n);
+          //  System.Console.WriteLine("PARENTS SIZE: {0}", n);
             for (int i = n - 1; i >= 0; i--)
             {
                 Genome g1 = parents.ElementAt(i);
-                for (int j = i; j >= 0; j--)
+                for (int j = n-1; j >= 0; j--)
                 {
                     if (i != j)
                     {
                         Genome g2 = parents.ElementAt(j);
                         Genome child1 = crossoverMethod(g1, g2);
                         
-                        if (child1 != null && children.Count < this.populationSize)
+                        if (child1 != null)
                         {
                             mutationMethod(child1, MutationRate);
                             children.Add(child1);
-                        }
-
-                        Genome child2 = crossoverMethod(g2, g1);
-                        if (child2 != null && children.Count < this.populationSize)
-                        {
-                            mutationMethod(child2, MutationRate);
-                            children.Add(child2);
-                        }
+                        }           
                     }
                 }
             }
-            /*
-            n = parents.Count();
-            int qp = parents.Count;
-            while (children.Count < this.PopulationSize && qp  > 1)
-            {
-                int i = rndSelect.Next(n);
-                int j = rndSelect.Next(n);
-                while (i == j)
-                {
-                    j = rndSelect.Next(n);
-                }
-                Genome g1 = parents[i];
-                Genome g2 = parents[j];
-                Genome ngen = this.crossoverMethod(g1, g2);
-                if (ngen != null) {
-                    mutationMethod(ngen, this.mutationRate);
-                    children.Add(ngen);
-                }
-            }*/
 
             uint m = (uint)children.Count();
             if (m < minPopulationSize)

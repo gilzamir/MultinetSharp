@@ -96,6 +96,12 @@ namespace Multinet.Test
             System.Console.WriteLine("BITARRAY(uint32.MaxValue) = {0}", code);
         }
 
+        public static void testRungeKutta4()
+        {
+            Math.Impl.RungeKuttaMethod method = new Math.Impl.RungeKuttaMethod();
+            
+        }
+
         public static void testMutation()
         {
             Genome g1 = new Genome();

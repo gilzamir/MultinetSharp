@@ -29,24 +29,25 @@ namespace Multinet.Math.Impl
             }
         }
 
-        public double nextState(double state, TargetFunction machine)
+        public double nextState(double state, TargetFunction f)
         {
             //4th Order Runge-Kutta ====================================================
             double k1, k2, k3, k4;
             double step = this["step"];
             double pState = state;
 
-            k1 = machine(state);
-            state = pState + k1 * step / 2.0;
+            k1 = f(state);
+            state = pState + 0.5 * step * k1;
 
-            k2 = machine(state);
-            state = pState + k2 * step / 2.0;
+            k2 = f(state);
+            state = pState + 0.5  * step * k2;
 
-            k3 = machine(state);
-            state = pState + k3 * step;
+            k3 = f(state);
+            state = pState + step * k3;
 
-            k4 = machine(state);
-            state = pState + (k1 + 2 * k2 + 2 * k3 + k4) * step / 6.0;
+            k4 = f(state);
+
+            state = pState + (k1 + 2 * (k2 + k3) + k4) * step / 6.0;
             if (state > 100)
             {
                 state = 100;
