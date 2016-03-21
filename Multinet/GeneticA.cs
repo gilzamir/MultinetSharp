@@ -245,11 +245,11 @@ namespace Multinet.Genetic
             Dictionary<int, int> selected = new Dictionary<int, int>();
             //Console.WriteLine("SURVIVORS: {0}", survivors);
 
-            int q = 0;
+            int q = 0; //quantidade de sobreviventes adicionados
             while (q < survivors)
             {
-                double pos = roulet.NextDouble();
-                double region = 0;
+                double pos = roulet.NextDouble(); //selecao de uma posicao aleatoria na roleta
+                double region = 0.0;
                 for (int i = 0; i < n; i++)
                 {
                     Genome current = genomes[i];

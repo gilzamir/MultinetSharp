@@ -1,0 +1,7 @@
+/home/gilzamir/lab/MultinetSharp/Multinet/obj/Debug/.NETFramework,Version=v4.5.2.AssemblyAttribute.cs
+/home/gilzamir/lab/MultinetSharp/Multinet/obj/Debug/.NETFramework,Version=v4.5.1.AssemblyAttribute.cs
+/home/gilzamir/lab/MultinetSharp/Multinet/bin/Debug/Multinet.exe.config
+/home/gilzamir/lab/MultinetSharp/Multinet/bin/Debug/Multinet.exe.mdb
+/home/gilzamir/lab/MultinetSharp/Multinet/bin/Debug/Multinet.exe
+/home/gilzamir/lab/MultinetSharp/Multinet/obj/Debug/Multinet.exe
+/home/gilzamir/lab/MultinetSharp/Multinet/obj/Debug/Multinet.exe.mdb

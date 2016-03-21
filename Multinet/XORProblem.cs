@@ -36,8 +36,6 @@ namespace Multinet.Sample
 
             double[] outputs = { 0, 1, 1, 0 };
 
-            double[] statistic = { double.MinValue, double.MaxValue, 0.0 };
-
             double error = 0;
 
             NeuralNet net = (NeuralNet)obj;
@@ -48,7 +46,7 @@ namespace Multinet.Sample
                 net[0].ProccessInput(input[0]);
                 net[1].ProccessInput(input[1]);
                 net.Proccess();
-                
+
                 double y = net[2].GetOutput();
 
                 double e = (y-outputs[i]);
@@ -71,9 +69,9 @@ namespace Multinet.Sample
         public XORProblem()
         {
             genetic = new GeneticA(200);
-            genetic.Elitism = 1;
-            genetic.SurvivalRate = 0.8;
-            genetic.MutationRate = 0.0005;
+            genetic.Elitism = 0;
+            genetic.SurvivalRate = 0.9;
+            genetic.MutationRate = 0.00005;
             genetic.MinPopulationSize = 200;
 
             Random rnd = new Random();
@@ -109,13 +107,13 @@ namespace Multinet.Sample
                 Neuron ne2 = net[n2];
                 Neuron ne3 = net[n3];
 
-               // ne1.Implementation = new Beer1995Neuron();
-                //ne2.Implementation = new Beer1995Neuron();
-                //ne3.Implementation = new Beer1995Neuron();
+                ne1.Implementation = new Beer1995Neuron();
+                ne2.Implementation = new Beer1995Neuron();
+                ne3.Implementation = new Beer1995Neuron();
 
-                ne1.Implementation = new HNeuron();
-                ne2.Implementation = new HNeuron();
-                ne3.Implementation = new HNeuron();
+                //ne1.Implementation = new HNeuron();
+                //ne2.Implementation = new HNeuron();
+                //ne3.Implementation = new HNeuron();
                 
                 Chromossome cr = gen.GetChromossome(0);
 
