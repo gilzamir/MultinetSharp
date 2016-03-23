@@ -69,7 +69,7 @@ namespace Multinet.Sample
         public XORProblem()
         {
             genetic = new GeneticA(200);
-            genetic.Elitism = 0;
+            genetic.Elitism = 1;
             genetic.SurvivalRate = 0.9;
             genetic.MutationRate = 0.00005;
             genetic.MinPopulationSize = 200;
@@ -147,7 +147,6 @@ namespace Multinet.Sample
                  net.NumericalMethod["step"] = 4.0 * BitArrayUtils.ToNDouble(cr.GetGene(8)) + 0.05;
                 return net;
             };
-
         }
 
         public void Run()

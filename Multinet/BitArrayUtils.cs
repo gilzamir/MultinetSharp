@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Collections;
 
 namespace Multinet.Utils
@@ -11,7 +10,7 @@ namespace Multinet.Utils
     /// <summary>
     /// This class contains a set of helper methods to array of bits manipulation.
     /// </summary>
-    sealed class BitArrayUtils
+    public sealed class BitArrayUtils
     {
         /// <summary>
         /// This method get a real number in range [0.0, 1.0]. The real number
