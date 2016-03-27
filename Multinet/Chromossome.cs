@@ -7,6 +7,7 @@ using Multinet.Utils;
 
 namespace Multinet.Genetic
 {
+	[Serializable]
     public class Chromossome
     {
         public static int GENE_SIZE = 32;

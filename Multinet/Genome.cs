@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Multinet.Genetic
 {
+	[Serializable]
     public class Genome : Evaluable, IComparable
     {
+		
         private Dictionary<uint, Chromossome> chromossomes;
         private double score;
 
@@ -70,6 +73,14 @@ namespace Multinet.Genetic
             }
             return txt;
         }
+
+		public void Serialize(string path){
+			IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter ();
+			System.IO.Stream stream = new System.IO.FileStream (path, System.IO.FileMode.Create,
+											System.IO.FileAccess.Write, System.IO.FileShare.None);
+			formatter.Serialize (stream, this);
+			stream.Close ();
+		}
 
         public int CompareTo(object obj)
         {

@@ -31,8 +31,6 @@ namespace Multinet.Genetic
 
                 Chromossome chr2 = gen2.GetChromossome(id);
 
-                ICollection<uint> genesKeys = chr1.GetKeys();
-                
                 int m = System.Math.Min(chr1.Size, chr2.Size);
                 int m2 = chr2.Size;
 

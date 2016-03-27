@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,7 +47,7 @@ namespace Multinet.Net.Impl
                 {
                     Synapse syn = net[con.X, con.Y];
                     Neuron ne = net[syn.From];
-                    double zi = ne.Implementation.GetOutput(ne);
+					double zi = ne.Implementation.GetPotential (ne);
                     double wij = syn.Intensity;
                     //Console.WriteLine("SYNAPSE({0}, {1}) = {2}", con.X, con.Y, wij);
                     s += wij * zi; //inputs of neuron id == column id
@@ -56,7 +56,14 @@ namespace Multinet.Net.Impl
 
             double sensorValue = target.SensorValue;
             target.SensorValue = 0;
-            return (-state  + (s * iw + sensorValue * sw + nnet.RestInput))/ target.TimeConst;
-        }
+			double nstate =  (-state  + (s * iw + sensorValue * sw + nnet.RestInput))/(target.TimeConst != 0 ? target.TimeConst: 0.00000001);
+        
+			if (nstate < -100) {
+				nstate = -100;
+			} else if (nstate > 100) {
+				nstate = 100;
+			}
+			return nstate; 
+		}
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Multinet.Math;
-
+using Multinet.Math.Impl;
 
 
 namespace Multinet.Net

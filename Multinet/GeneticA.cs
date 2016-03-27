@@ -18,10 +18,11 @@ namespace Multinet.Genetic
         private uint minPopulationSize;
         private bool selectDuplicatedGenome;
         private int elitism;
-        private Random rnd = new Random();
+		private int validGenomes;
 
         public GeneticA(uint psize = 100, double mr = 0.05)
         {
+			this.validGenomes = 0;
             this.populationSize = psize;
             this.mutationRate = mr;
             this.survivalRate = 1.0;
@@ -189,6 +190,7 @@ namespace Multinet.Genetic
             statistic[1] = double.MinValue;
             statistic[2] = 0.0;
             numberOfEvaluations = 0;
+			validGenomes = 0;
         }
 
         public void EndEvaluation(double[] statistic)
@@ -205,6 +207,11 @@ namespace Multinet.Genetic
 
             Evaluable evaluable = Translator(genome);
             double fitness = evaluator.evaluate(evaluable);
+
+			if (fitness > 0) {
+				validGenomes++;
+			}
+
             statistic[2] += fitness;
             this.numberOfEvaluations++;
             if (fitness < statistic[0])
@@ -219,6 +226,30 @@ namespace Multinet.Genetic
 
             return fitness;
         }
+
+		public void UpdateStatistic(double fitness, double []statistic) {
+
+			if (fitness > 0) {
+				validGenomes++;
+			}
+
+			if (statistic == null || statistic.Length < 3)
+			{
+				throw new ArgumentException("Invalid array of statistic information.");
+			}
+			statistic[2] += fitness;
+			this.numberOfEvaluations++;
+			if (fitness < statistic[0])
+			{
+				statistic[0] = fitness;
+			}
+
+			if (fitness > statistic[1])
+			{
+				statistic[1] = fitness;
+			}
+		}
+
 
         public uint NextGeneration(double[] statistic)
         {
@@ -238,7 +269,7 @@ namespace Multinet.Genetic
                 }
             }
 
-            int survivors = (int)(populationSize * survivalRate);
+			int survivors = System.Math.Max(validGenomes, (int)(populationSize * survivalRate));
 
             Random roulet = new Random();
 
@@ -246,13 +277,15 @@ namespace Multinet.Genetic
             //Console.WriteLine("SURVIVORS: {0}", survivors);
 
             int q = 0; //quantidade de sobreviventes adicionados
-            while (q < survivors)
+
+			while (q < survivors)
             {
                 double pos = roulet.NextDouble(); //selecao de uma posicao aleatoria na roleta
                 double region = 0.0;
                 for (int i = 0; i < n; i++)
                 {
                     Genome current = genomes[i];
+
                     region += (current.Value / statistic[2]);
 
                     if (pos <= region && !selected.ContainsKey(i))
@@ -261,34 +294,46 @@ namespace Multinet.Genetic
                         parents.Add(current);
                         q++;
                         break;
-                    } 
+                    }
                 }
                 //System.Console.WriteLine("COMP {0}      {1}", position, region);
-                
             }
 
 
             parents.Sort();
             n = parents.Count();
+
           //  System.Console.WriteLine("PARENTS SIZE: {0}", n);
-            for (int i = n - 1; i >= 0; i--)
+
+			for (int i = n - 1; i >= 0; i--)
             {
                 Genome g1 = parents.ElementAt(i);
-                for (int j = n-1; j >= 0; j--)
+                for (int j = i; j >= 0 ; j--)
                 {
                     if (i != j)
                     {
                         Genome g2 = parents.ElementAt(j);
                         Genome child1 = crossoverMethod(g1, g2);
-                        
+						Genome child2 = crossoverMethod (g2, g1);
                         if (child1 != null)
                         {
                             mutationMethod(child1, MutationRate);
                             children.Add(child1);
+							if (children.Count >= populationSize) {
+								goto END_LOOP;		
+							}
+
+							mutationMethod (child2, MutationRate);
+							children.Add (child2);
+							if (children.Count >= populationSize) {
+								goto END_LOOP;
+							}
+
                         }           
                     }
                 }
             }
+			END_LOOP:
 
             uint m = (uint)children.Count();
             if (m < minPopulationSize)

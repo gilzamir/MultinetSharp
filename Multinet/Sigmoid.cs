@@ -9,7 +9,13 @@ namespace Multinet.Math
     {
         public double Exec(double v)
         {
-            return 1.0 / (1 + System.Math.Exp(-v));
+			double d = (1 + System.Math.Exp (-v));
+
+			if (d == 0.0) {
+				d = 0.00000000000001;
+			}
+
+			return 1.0 / d;
         }
 
         public double Min()

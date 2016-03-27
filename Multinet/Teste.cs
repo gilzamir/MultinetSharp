@@ -98,7 +98,6 @@ namespace Multinet.Test
 
         public static void testRungeKutta4()
         {
-            Math.Impl.RungeKuttaMethod method = new Math.Impl.RungeKuttaMethod();
             
         }
 
