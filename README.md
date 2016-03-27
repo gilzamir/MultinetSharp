@@ -6,5 +6,5 @@ Introduction
 Samples
 ========
 
-**BallBalance* project is an implementation of simple game that it use MultinetSharp to balance a ball in a horizontal bar.
+**BallBalance** project is an implementation of simple game that it use MultinetSharp to balance a ball in a horizontal bar.
 [See more here!](https://github.com/gilzamir/multinetsharp_sample_ballbalance)
