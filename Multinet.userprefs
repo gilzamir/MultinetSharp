@@ -1,4 +1,4 @@
-﻿<Properties StartupItem="Multinet/Multinet.csproj">
+﻿<Properties StartupItem="Samples/Samples.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Multinet/Chromossome.cs">
     <Files>

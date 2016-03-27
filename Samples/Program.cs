@@ -1,9 +1,18 @@
 ﻿using System;
 
+using Multinet.Sample;
+
 namespace Multinet.App
 {
     class Program
-    {        
+    {       
+
+		public static void TestGenetic()
+		{
+			XORProblem problem = new XORProblem();
+			problem.Run();   
+		}
+
         static void Main(string[] args)
         {
             //Test.Test.testHomeoestaticNet();
@@ -13,8 +22,7 @@ namespace Multinet.App
 
              //Test.Test.testMutation();
             //Test.Test.testCrossover();
-             Test.Test.TestGenetic();
-
+			TestGenetic();
             Console.ReadKey();
         }
     }

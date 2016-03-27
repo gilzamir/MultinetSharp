@@ -4,7 +4,6 @@ using Multinet.Net;
 using Multinet.Math;
 using Multinet.Genetic;
 using Multinet.Utils;
-using Multinet.Sample;
 using Multinet.Net.Impl;
 
 class OneNet : Net
@@ -62,14 +61,6 @@ namespace Multinet.Test
 {
     class Test
     {
-        
-        public static void TestGenetic()
-        {
-            XORProblem problem = new XORProblem();
-            problem.Run();   
-        }
-
-
         public static void testBitArrayUtils()
         {
             BitArray array = BitArrayUtils.ToBitArray(1);
