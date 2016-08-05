@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multinet", "Multinet.csproj", "{434511A4-6C6C-4B8E-95B4-D5C2E9F3689C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples", "..\Samples\Samples.csproj", "{4ED5B7CD-5C45-4963-A4D0-55E5AC191DFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,13 @@ Global
 		{434511A4-6C6C-4B8E-95B4-D5C2E9F3689C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{434511A4-6C6C-4B8E-95B4-D5C2E9F3689C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{434511A4-6C6C-4B8E-95B4-D5C2E9F3689C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED5B7CD-5C45-4963-A4D0-55E5AC191DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED5B7CD-5C45-4963-A4D0-55E5AC191DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED5B7CD-5C45-4963-A4D0-55E5AC191DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED5B7CD-5C45-4963-A4D0-55E5AC191DFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Multinet.csproj

@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Multinet.Sample;
+using Multinet.Genetic;
 
 namespace Multinet.App
 {
@@ -9,9 +10,14 @@ namespace Multinet.App
 
 		public static void TestGenetic()
 		{
-			XORProblem problem = new XORProblem();
-			problem.Run();   
-		}
+            //XORProblem problem = new XORProblem();
+            //problem.Run();   
+
+            Problem problem = new Problem(genetic, evaluator, stopCondiction, new DebugProblemEventHandler());
+
+
+
+        }
 
         static void Main(string[] args)
         {
