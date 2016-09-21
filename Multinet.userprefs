@@ -1,19 +1,6 @@
 ﻿<Properties StartupItem="Samples/Samples.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Multinet/Chromossome.cs">
-    <Files>
-      <File FileName="Multinet/HNeuron.cs" Line="1" Column="1" />
-      <File FileName="Multinet/XORProblem.cs" Line="1" Column="1" />
-      <File FileName="Multinet/GeneticA.cs" Line="20" Column="29" />
-      <File FileName="Multinet/Neuron.cs" Line="1" Column="1" />
-      <File FileName="Multinet/Sigmoid.cs" Line="1" Column="1" />
-      <File FileName="Multinet/Beer1995Neuron.cs" Line="1" Column="1" />
-      <File FileName="Multinet/CrossoverImpl.cs" Line="33" Column="5" />
-      <File FileName="Multinet/Teste.cs" Line="101" Column="10" />
-      <File FileName="Multinet/Genome.cs" Line="82" Column="20" />
-      <File FileName="Multinet/Chromossome.cs" Line="7" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

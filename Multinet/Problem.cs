@@ -68,7 +68,14 @@ namespace Multinet.Genetic
         private Evaluator evaluatorEngine;
         private StopCondiction stopCondiction;
         private ProblemEventHandler eventHandler;
+		private long epoch;
 
+
+		public long Epoch {
+			get {
+				return epoch;
+			}
+		}
 
         public Evaluator EvaluatorEngine
         {
@@ -92,7 +99,7 @@ namespace Multinet.Genetic
             geneticEngine.init();
 
 
-            long current = 0;
+            epoch = 0;
             while (true)
             {
                 List<Genome> pop = geneticEngine.Population;
@@ -107,9 +114,9 @@ namespace Multinet.Genetic
 
                 geneticEngine.EndEvaluation(statistic);
 
-                eventHandler.handleCurrentStatistic(current, statistic);
+                eventHandler.handleCurrentStatistic(epoch, statistic);
 
-                current++;
+                epoch++;
 
 
                 if (this.stopCondiction(this))
@@ -127,7 +134,7 @@ namespace Multinet.Genetic
                         break;
                     }
                 }
-                eventHandler.handleCurrentPopulation(current-1, this, this.geneticEngine);
+                eventHandler.handleCurrentPopulation(epoch-1, this, this.geneticEngine);
             }
             eventHandler.handleEndPopulation(this, this.geneticEngine);
 

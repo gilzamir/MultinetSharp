@@ -66,6 +66,18 @@ namespace Multinet.Sample
         GeneticA genetic;
         XOREvaluator evaluator = new XOREvaluator();
 
+		private static bool stopCondiction(Problem problem){
+			//((XORProblem)problem)
+
+
+			if (problem.Epoch > 1000) {
+				return true;
+			}
+
+			return false;
+		}
+
+
         public XORProblem()
         {
             genetic = new GeneticA(200);
@@ -157,63 +169,20 @@ namespace Multinet.Sample
 
         public void Run()
         {
-            int maxGen = 100;
+			Problem problem = new Problem(genetic, evaluator, stopCondiction, new DebugProblemEventHandler());
+			problem.Run ();
+			int q = genetic.Population.Count;
+			if (q > 0)
+			{
+				genetic.Population.Sort();
 
-            double[] statistic = { double.MaxValue, double.MinValue, 0.0 };
-            genetic.init();
-
-
-            int current = 0;
-            while(true)
-            {
-                List<Genome> pop = genetic.Population;
-                genetic.InitEvaluation(statistic);
-                int n = pop.Count();
-
-                for (int j = 0; j < n; j++)
-                {
-                    Genome gen = pop.ElementAt(j);
-
-                    //System.Console.WriteLine(gen);
-                    gen.Value = genetic.EvaluateOne(gen, evaluator, statistic);
-                    //System.Console.WriteLine("GENOME FITNESS: {0}", gen.Value);
-                }
-                genetic.EndEvaluation(statistic);
-
-
-                Console.WriteLine("GER({0}) :: Fitness(Min, Max, Avg)=({1}, {2}, {3})",
-                current, statistic[0], statistic[1], statistic[2] / pop.Count);
-
-                current++;
-                
-                if (current >= maxGen) 
-                {
-
-                    break;
-                } else
-                {
-                    uint survivors = genetic.NextGeneration(statistic);
-
-                    if (survivors <= 0)
-                    {
-                        Console.WriteLine("População Extinta");
-                        break;
-                    }                    
-                }
-            }
-
-            int q = genetic.Population.Count();
-            if (q > 0)
-            {
-                genetic.Population.Sort();
-                
-                Genome better = genetic.Population.ElementAt(q-1);
-                NeuralNet bnet = (NeuralNet)genetic.Translator(better);
-                Console.WriteLine("Synapses: ");
-                Console.WriteLine(bnet);
-                evaluator.LogEnabled = true;
-                Console.WriteLine("FITNESS: {0}", evaluator.evaluate(bnet));
-            }
+				Genome better = genetic.Population[q-1];
+				NeuralNet bnet = (NeuralNet)genetic.Translator(better);
+				Console.WriteLine("Synapses: ");
+				Console.WriteLine(bnet);
+				evaluator.LogEnabled = true;
+				Console.WriteLine("FITNESS: {0}", evaluator.evaluate(bnet));
+			}   
         }
     }
 }
