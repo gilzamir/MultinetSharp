@@ -271,7 +271,6 @@ namespace Multinet.Genetic
 
 			int survivors = System.Math.Max(validGenomes, (int)(populationSize * survivalRate));
 
-            Random roulet = new Random();
 
             Dictionary<int, int> selected = new Dictionary<int, int>();
             //Console.WriteLine("SURVIVORS: {0}", survivors);
@@ -280,7 +279,7 @@ namespace Multinet.Genetic
 
 			while (q < survivors)
             {
-                double pos = roulet.NextDouble(); //selecao de uma posicao aleatoria na roleta
+				double pos = Multinet.Math.PRNG.NextDouble(); //selecao de uma posicao aleatoria na roleta
                 double region = 0.0;
                 for (int i = 0; i < n; i++)
                 {

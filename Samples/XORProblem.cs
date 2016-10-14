@@ -8,6 +8,10 @@ using Multinet.Net.Impl;
 
 namespace Multinet.Sample
 {
+
+
+	using rnd = Multinet.Math.PRNG;
+
     public class XOREvaluator : Evaluator
     {
         public bool logEnabled = false;
@@ -61,6 +65,8 @@ namespace Multinet.Sample
         }
     }
 
+
+
     class XORProblem
     {
         GeneticA genetic;
@@ -77,7 +83,6 @@ namespace Multinet.Sample
 			return false;
 		}
 
-
         public XORProblem()
         {
             genetic = new GeneticA(200);
@@ -86,7 +91,6 @@ namespace Multinet.Sample
             genetic.MutationRate = 0.0005;
             genetic.MinPopulationSize = 200;
 
-            Random rnd = new Random();
 
             genetic.GenomeBuilder = () =>
             {

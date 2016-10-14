@@ -20,7 +20,7 @@ namespace Multinet.Net.Impl
 
         public override double GetOutput(Neuron ne)
         {
-            return GetPotential(ne) * this["outputgain"];
+			return   (OutputAmp * GetPotential(ne) - OutputShift) * this["outputgain"];
         }
 
         public override double GetPotential(Neuron n)

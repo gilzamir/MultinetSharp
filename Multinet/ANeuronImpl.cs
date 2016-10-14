@@ -11,13 +11,38 @@ namespace Multinet.Net
         private Dictionary<string, double> doubleVars;
         private Dictionary<String, Function> functions;
         private bool useNumericalMethod;
+		private double outputShift, outputAmp;
 
         public ANeuronImpl()
         {
             useNumericalMethod = true;
             doubleVars = new Dictionary<string, double>();
             functions = new Dictionary<string, Function>();
+			outputShift = 0.0;
+			outputAmp = 1.0;
         }
+
+
+		public double OutputShift {
+			get {
+				return outputShift;
+			}
+
+			set {
+				outputShift = value;
+			}
+		}
+
+
+		public double OutputAmp {
+			get {
+				return outputAmp;
+			} 
+
+			set {
+				outputAmp = value;
+			}
+		}
 
         public bool UseNumericalMethod
         {
