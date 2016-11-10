@@ -63,6 +63,8 @@
     <Compile Include="Tanh.cs" />
     <Compile Include="Teste.cs" />
     <Compile Include="Math.cs" />
+    <Compile Include="Properties\OnlineProblem.cs" />
+    <Compile Include="ext\HIRON3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -76,9 +78,6 @@
   </Target>
   -->
   <ItemGroup>
-    <Reference Include="WebMatrix.Data">
-      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\WebMatrix.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Serialization">
       <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Xml.Serialization.dll</HintPath>
     </Reference>
@@ -87,12 +86,6 @@
     </Reference>
     <Reference Include="System.Xml">
       <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Xml.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xaml">
-      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Xaml.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web">
-      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization">
       <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Runtime.Serialization.dll</HintPath>
@@ -112,5 +105,8 @@
     <Reference Include="System.Core">
       <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ext\" />
   </ItemGroup>
 </Project>

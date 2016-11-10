@@ -17,16 +17,22 @@ namespace Multinet.App
             problem.Run();   
 		}
 
+		public static void MatrixPattern() {
+			MatrixPatternDetectionProblem mp = new MatrixPatternDetectionProblem ();
+			mp.Training ();
+			mp.Run ();
+		}
+
 		public static void run1(){
 			int[] st = new int[2];
 			st [0] = 0;
 			st [1] = 0;
 
 			Multinet.Math.PRNG.SetSeed (Environment.TickCount);
-			int len = 200000000;
+			int len = 200;
 			for (int i = 0; i < len; i++) {
 				double c = Multinet.Math.PRNG.NextDouble();
-				//System.Console.WriteLine (c);
+				System.Console.WriteLine (c);
 				if (c > 0.5) {
 					st [0]++; 
 				} else {
@@ -39,7 +45,8 @@ namespace Multinet.App
 
         static void Main(string[] args)
         {
-			XOR();
+			MatrixPattern ();
+			//XOR();
 			//run1();
             Console.ReadKey();
         }

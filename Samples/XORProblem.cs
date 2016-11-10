@@ -131,6 +131,7 @@ namespace Multinet.Sample
 
                 
                 Chromossome cr = gen.GetChromossome(0);
+			
 
                 net.CreateSynapse(n1, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(0))-30);
                 net.CreateSynapse(n2, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(1))-30);

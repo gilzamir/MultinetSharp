@@ -1,11 +1,16 @@
 ﻿<Properties StartupItem="Samples/Samples.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Multinet/Impl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Samples/MatrixPatternDetectionProblem.cs">
     <Files>
       <File FileName="Multinet/INeuronImpl.cs" Line="1" Column="1" />
-      <File FileName="Multinet/ANeuronImpl.cs" Line="36" Column="3" />
-      <File FileName="Multinet/Impl.cs" Line="16" Column="14" />
-      <File FileName="Samples/Program.cs" Line="28" Column="11" />
+      <File FileName="Multinet/ANeuronImpl.cs" Line="1" Column="1" />
+      <File FileName="Samples/Program.cs" Line="23" Column="14" />
+      <File FileName="Multinet/GeneticA.cs" Line="318" Column="12" />
+      <File FileName="Samples/XORProblem.cs" Line="1" Column="1" />
+      <File FileName="Multinet/Properties/OnlineProblem.cs" Line="111" Column="38" />
+      <File FileName="Samples/MatrixPatternDetectionProblem.cs" Line="96" Column="37" />
+      <File FileName="Multinet/Genome.cs" Line="1" Column="1" />
+      <File FileName="Multinet/Math.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

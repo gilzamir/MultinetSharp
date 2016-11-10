@@ -19,6 +19,8 @@ namespace Multinet.Genetic
         private bool selectDuplicatedGenome;
         private int elitism;
 		private int validGenomes;
+		private int maxRetries = 1000;
+
 
         public GeneticA(uint psize = 100, double mr = 0.05)
         {
@@ -32,6 +34,16 @@ namespace Multinet.Genetic
             this.selectDuplicatedGenome = false;
             InitializeDefaultBehavior();
         }
+
+		public int MaxRetries {
+			get {
+				return maxRetries;
+			}
+
+			set {
+				maxRetries = value;
+			}
+		}
 
         public int Elitism
         {
@@ -276,18 +288,24 @@ namespace Multinet.Genetic
             //Console.WriteLine("SURVIVORS: {0}", survivors);
 
             int q = 0; //quantidade de sobreviventes adicionados
-
+			int retries  = 0;
 			while (q < survivors)
             {
 				double pos = Multinet.Math.PRNG.NextDouble(); //selecao de uma posicao aleatoria na roleta
+				//Console.WriteLine("POS: {0}", pos);
                 double region = 0.0;
                 for (int i = 0; i < n; i++)
                 {
                     Genome current = genomes[i];
 
+					if (current.Value < 0 || statistic[2] <= 0
+					) {
+						throw new ArgumentOutOfRangeException ("Evaluation value of genome can't be less than or equal to zero!");
+					}
+
                     region += (current.Value / statistic[2]);
 
-                    if (pos <= region && !selected.ContainsKey(i))
+					if ( pos <= region && !selected.ContainsKey(i))
                     {
                         selected[i] = i;
                         parents.Add(current);
@@ -295,6 +313,10 @@ namespace Multinet.Genetic
                         break;
                     }
                 }
+				retries++;
+				if (retries > maxRetries) {
+					break;
+				}
                 //System.Console.WriteLine("COMP {0}      {1}", position, region);
             }
 
