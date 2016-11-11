@@ -64,7 +64,6 @@
     <Compile Include="Tanh.cs" />
     <Compile Include="Teste.cs" />
     <Compile Include="Math.cs" />
-    <Compile Include="Properties\OnlineProblem.cs" />
     <Compile Include="ext\HIRON3.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +92,6 @@
     </Reference>
     <Reference Include="System.Numerics">
       <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Json">
-      <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.Json.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\..\..\..\usr\lib\mono\4.5\System.dll</HintPath>

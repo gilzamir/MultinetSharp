@@ -69,7 +69,7 @@ namespace Multinet.Genetic
 
 		public double CurrentAvgScore {
 			get {
-				return statistic [2];
+				return statistic [2]/population.Count;
 			}
 		}
 
