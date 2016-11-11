@@ -13,11 +13,12 @@ using System.IO;
 namespace Multinet.Sample
 {
 	public class MatrixPatternDetectionProblem
-	{
+	{ 
 
 		public int[][] state;
 		public long time;
 		public bool training = true;
+        public const int INPUT_SIZE = 9,  HIDDEN_SIZE = 30, OUTPUT_SIZE = 9;
 
 		private OnlineProblem problem;
 
@@ -83,8 +84,8 @@ namespace Multinet.Sample
 			problem.geneticEngine.Elitism = 2;
 			problem.geneticEngine.MinPopulationSize = 10;
 			problem.geneticEngine.PopulationSize = 100;
-			problem.geneticEngine.MutationRate = 0.005;
-			problem.geneticEngine.SurvivalRate = 0.6;
+			problem.geneticEngine.MutationRate = 0.0005;
+			problem.geneticEngine.SurvivalRate = 0.9;
 
 
 
@@ -93,7 +94,7 @@ namespace Multinet.Sample
 
 
 			problem.geneticEngine.Translator = (Genome gen) => {
-				HIRON3 hiron3 = new HIRON3(9, 30, 9, gen);
+				HIRON3 hiron3 = new HIRON3(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE, gen);
 				hiron3.CreateNeurons();
 				hiron3.CreateSynapses();
 				return hiron3.Net;
@@ -104,11 +105,11 @@ namespace Multinet.Sample
 				Genome gen = new Genome();
 
 				Chromossome neurons = new Chromossome();
-				int n = 27;
+				int n = INPUT_SIZE + HIDDEN_SIZE + OUTPUT_SIZE;
 				for (uint i = 0; i < n; i++) {
 					neurons.AddGene(i, Multinet.Math.PRNG.NextDouble());
 				}
-				int synapsesNumber = 243;
+				int synapsesNumber = INPUT_SIZE * HIDDEN_SIZE + HIDDEN_SIZE * OUTPUT_SIZE;
 				Chromossome synapses = new Chromossome();
 				for (uint i = 0; i < synapsesNumber; i++) {
 					synapses.AddGene(i, Multinet.Math.PRNG.NextDouble());
@@ -138,7 +139,7 @@ namespace Multinet.Sample
 		/// <param name="p">P.</param>
 		/// <param name="gen">Gen.</param>
 		public double evaluate(OnlineProblem p, Genome gen) {
-			gen.Value = 1.0 / (sum + 0.00001f); //set genome fitness
+			gen.Value = 1.0 / (sum + 0.0001f); //set genome fitness
 			sum = 0; //reset to next genome evaluation
 			return gen.Value;
 		}
@@ -184,29 +185,35 @@ namespace Multinet.Sample
 			NeuralNet net = (NeuralNet) this.problem.geneticEngine.Translator(gen);
 
 
+            int userc;
+            do
+            {
+                Console.WriteLine("Select a pattern [0, 8] or -1 to exit: ");
+                userc = int.Parse(Console.ReadLine());
 
-			Console.WriteLine ("Select a pattern [0, 8]: ");
-			int userc = int.Parse(Console.ReadLine ());
 
+                for (int i = 0; i < INPUT_SIZE; i++)
+                {
+                    net[i].ProccessInput(state[userc][i]);
+                }
 
-			for (int i = 0; i < 9; i++) {
-				net [i].ProccessInput (state[userc][i]);
-			}
-
-			net.Proccess ();
-
-			int idx = 0;
-			float f = -1.0f;
-			int c = idx;
-			for (int i = 26; i >= 18; i--) {
-				float v = (float) net [i].GetOutput ();
-				if (v > f) {
-					c = idx;
-					f = v;
-				}
-				idx++;
-			}
-			Console.WriteLine ("NET OUTPUT: {0}", c);
+                net.Proccess();
+                int t = INPUT_SIZE + HIDDEN_SIZE + OUTPUT_SIZE;
+                int idx = 0;
+                float f = float.MinValue;
+                int c = idx;
+                for (int i = t - 1; i >= (t - 9); i--)
+                {
+                    float v = (float)net[i].GetOutput();
+                    if (v > f)
+                    {
+                        c = idx;
+                        f = v;
+                    }
+                    idx++;
+                }
+                Console.WriteLine("NET OUTPUT: {0}", c);
+            } while (userc > 0);
 		}
 
 		/// <summary>
@@ -224,16 +231,16 @@ namespace Multinet.Sample
 
 
 		private int NetDecision(int stateIdx, NeuralNet net){
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < INPUT_SIZE; i++) {
 				net [i].ProccessInput (state[stateIdx][i]);
 			}
 
 			net.Proccess ();
-
+            int t = INPUT_SIZE + HIDDEN_SIZE + OUTPUT_SIZE;
 			int idx = 0;
-			float f = -1.0f;
+            float f = float.MinValue;
 			int c = idx;
-			for (int i = 26; i >= 18; i--) {
+			for (int i = t-1; i >= (t-9); i--) {
 				float v = (float) net [i].GetOutput ();
 				if (v > f) {
 					c = idx;
