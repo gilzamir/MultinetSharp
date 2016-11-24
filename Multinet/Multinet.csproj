@@ -33,10 +33,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ANeuronImpl.cs" />
+    <Compile Include="Beer1995NeuronStateless.cs" />
     <Compile Include="Beer1995Neuron.cs" />
     <Compile Include="BitArrayUtils.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="Chromossome.cs" />
+    <Compile Include="AvgNeuron.cs" />
     <Compile Include="CrossoverImpl.cs" />
     <Compile Include="EulerMethod.cs" />
     <Compile Include="GeneticA.cs" />

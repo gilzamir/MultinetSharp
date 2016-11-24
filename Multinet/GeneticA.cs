@@ -239,6 +239,11 @@ namespace Multinet.Genetic
             return fitness;
         }
 
+        public void UpdateStatistic(double fitness, Problem prob)
+        {
+            this.UpdateStatistic(fitness, prob.Statistic);
+        }
+
 		public void UpdateStatistic(double fitness, double []statistic) {
 
 			if (fitness > 0) {
@@ -265,6 +270,12 @@ namespace Multinet.Genetic
 
         public uint NextGeneration(double[] statistic)
         {
+
+            if (validGenomes == 0)
+            {
+                throw new Exception("Extinction!!");
+            }
+
             List<Genome> parents = new List<Genome>();
             List<Genome> children = new List<Genome>();
             int n = genomes.Count();
@@ -281,8 +292,7 @@ namespace Multinet.Genetic
                 }
             }
 
-			int survivors = System.Math.Max(validGenomes, (int)(populationSize * survivalRate));
-
+			int survivors =  (int)(populationSize * survivalRate);
 
             Dictionary<int, int> selected = new Dictionary<int, int>();
             //Console.WriteLine("SURVIVORS: {0}", survivors);
@@ -293,17 +303,12 @@ namespace Multinet.Genetic
             {
 				double pos = Multinet.Math.PRNG.NextDouble(); //selecao de uma posicao aleatoria na roleta
 				//Console.WriteLine("POS: {0}", pos);
-                double region = 0.0;
-                for (int i = 0; i < n; i++)
+                double region = 1.0;
+                for (int i = n-1; i > 0; i--)
                 {
                     Genome current = genomes[i];
-
-					if (current.Value < 0 || statistic[2] <= 0
-					) {
-						throw new ArgumentOutOfRangeException ("Evaluation value of genome can't be less than or equal to zero!");
-					}
-
-                    region += (current.Value / statistic[2]);
+                    
+                    double p = (current.Value / statistic[2]);
 
 					if ( pos <= region && !selected.ContainsKey(i))
                     {
@@ -312,6 +317,8 @@ namespace Multinet.Genetic
                         q++;
                         break;
                     }
+
+                    region -= p;
                 }
 				retries++;
 				if (retries > maxRetries) {
@@ -324,9 +331,9 @@ namespace Multinet.Genetic
             parents.Sort();
             n = parents.Count();
 
-          //  System.Console.WriteLine("PARENTS SIZE: {0}", n);
+            //  System.Console.WriteLine("PARENTS SIZE: {0}", n);
 
-			for (int i = n - 1; i >= 0; i--)
+            for (int i = n - 1; i >= 0; i--)
             {
                 Genome g1 = parents.ElementAt(i);
                 for (int j = i; j >= 0 ; j--)
@@ -336,6 +343,8 @@ namespace Multinet.Genetic
                         Genome g2 = parents.ElementAt(j);
                         Genome child1 = crossoverMethod(g1, g2);
 						Genome child2 = crossoverMethod (g2, g1);
+                        child1.Value = 0;
+                        child2.Value = 0;
                         if (child1 != null)
                         {
                             mutationMethod(child1, MutationRate);

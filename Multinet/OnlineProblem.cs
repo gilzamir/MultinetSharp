@@ -86,8 +86,8 @@ namespace Multinet.Genetic
 				fitness = 0;
 			}
 
-			if (currentGeneration == -1) { //start of epoch
-				startOfEpochHandlerBegin(this);
+			if (currentGeneration == -1) { //start of training
+                startOfEpochHandlerBegin(this);
 				population = geneticEngine.Population;
 				geneticEngine.InitEvaluation (statistic);
 				currentGeneration++;
@@ -119,12 +119,11 @@ namespace Multinet.Genetic
 				population = geneticEngine.Population;
 				finalOfEpochHandlerEnd(this);
 
-
-				startOfEpochHandlerBegin(this);
+                epoch++;
+                startOfEpochHandlerBegin(this);
 				geneticEngine.InitEvaluation (statistic);	
 				currentGeneration++;
 				currentGenomeIdx = 0;
-				epoch++;
 				startOfEpochHandlerEnd (this);
 			} 
 

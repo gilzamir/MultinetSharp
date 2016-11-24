@@ -7,7 +7,8 @@ namespace Multinet.Genetic
     {
         public static void MutationMethod(Genome gen, double chance)
         {
-            System.Random rnd = new System.Random();
+            int c = 0;
+            int cm = 0;
             ICollection<uint> ids = gen.GetKeys();
             foreach (uint id in ids)
             {
@@ -17,10 +18,10 @@ namespace Multinet.Genetic
                 foreach (uint gid in genesKeys)
                 {
                     BitArray gene = chr.GetGene(gid);
-
+                    
                     for (int i = 0; i < Chromossome.GENE_SIZE; i++)
                     {
-                        double selected = rnd.NextDouble();
+                        double selected = Multinet.Math.PRNG.NextDouble();
                         if (selected <= chance)
                         {
                             gene.Set(i, !gene.Get(i));

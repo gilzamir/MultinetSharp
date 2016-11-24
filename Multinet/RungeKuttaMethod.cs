@@ -27,7 +27,7 @@ namespace Multinet.Math.Impl
             }
         }
 
-        public double nextState(double state, TargetFunction f)
+        public double nextState(double runDuration, double state, TargetFunction f)
         {
             //4th Order Runge-Kutta ====================================================
             double k1, k2, k3, k4;

@@ -103,7 +103,7 @@ namespace Multinet.Sample
                 cr.AddGene(4, rnd.NextDouble());
                 cr.AddGene(5, rnd.NextDouble());
                 cr.AddGene(6, rnd.NextDouble());
-                cr.AddGene(7, rnd.NextDouble());
+               // cr.AddGene(7, rnd.NextDouble());
                 
                 gen.AddChromossome(0, cr);
                 return gen;
@@ -133,12 +133,12 @@ namespace Multinet.Sample
                 Chromossome cr = gen.GetChromossome(0);
 			
 
-                net.CreateSynapse(n1, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(0))-30);
-                net.CreateSynapse(n2, n3, 60 * BitArrayUtils.ToNDouble(cr.GetGene(1))-30);
-				net.CreateSynapse(n3, n4, 60 * BitArrayUtils.ToNDouble(cr.GetGene(2))-30);
+                net.CreateSynapse(n1, n3, 30 * BitArrayUtils.ToNDouble(cr.GetGene(0))-15);
+                net.CreateSynapse(n2, n3, 30 * BitArrayUtils.ToNDouble(cr.GetGene(1))-15);
+				net.CreateSynapse(n3, n4, 30 * BitArrayUtils.ToNDouble(cr.GetGene(2))-15);
 
                 ne1.Implementation.UseNumericalMethod = false;
-				ne1.Implementation["inputgain"] = 2 * BitArrayUtils.ToNDouble(cr.GetGene(3));
+				ne1.Implementation["inputgain"] = 10 * BitArrayUtils.ToNDouble(cr.GetGene(3));
                 ne1.Implementation["outputgain"] = 1.0;
                 ne1.Implementation["inputweight"] = 0.0;
                 ne1.Implementation["sensorweight"] = 1.0;
@@ -146,7 +146,7 @@ namespace Multinet.Sample
                 ne1.Implementation["bias"] = 0.0;
 
                 ne2.Implementation.UseNumericalMethod = false;
-				ne2.Implementation["inputgain"] = 2 * BitArrayUtils.ToNDouble(cr.GetGene(4));
+				ne2.Implementation["inputgain"] = 10 * BitArrayUtils.ToNDouble(cr.GetGene(4));
                 ne2.Implementation["outputgain"] = 1.0;
                 ne2.Implementation["inputweight"] = 0.0;
                 ne2.Implementation["sensorweight"] = 1.0;
@@ -157,7 +157,7 @@ namespace Multinet.Sample
 				ne3.Implementation["outputgain"] = 1.0;
                 ne3.Implementation["inputweight"] = 1.0;
                 ne3.Implementation["sensorweight"] = 0.0;
-                ne3.TimeConst = 10 * BitArrayUtils.ToNDouble(cr.GetGene(5)) + 0.001;
+                ne3.TimeConst = BitArrayUtils.ToNDouble(cr.GetGene(5)) + 0.001;
                 ne3.Implementation["bias"] = 0.0;
 
 				ne4.Implementation["inputgain"] = 1.0;
@@ -167,11 +167,12 @@ namespace Multinet.Sample
 				ne4.TimeConst = 1.0;
 				ne4.Implementation["bias"] = 0.0;
 
-                 net.NumericalMethod["step"] = 4.0 * BitArrayUtils.ToNDouble(cr.GetGene(7)) + 0.05;
+                 //net.NumericalMethod["step"] = 1.0 * BitArrayUtils.ToNDouble(cr.GetGene(7)) + 0.000001;
+                net.NumericalMethod["step"] = 0.5;
                 return net;
             };
         }
-
+        
         public void Run()
         {
 			Problem problem = new Problem(genetic, evaluator, stopCondiction, new DebugProblemEventHandler());

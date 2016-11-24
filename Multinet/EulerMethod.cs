@@ -12,7 +12,7 @@ namespace Multinet.Math.Impl
         public EulerMethod()
         {
             vars = new Dictionary<string, double>();
-            vars["step"] = 0.5;
+            vars["step"] = 0.1;
         }
 
         public double this[string var]
@@ -28,9 +28,11 @@ namespace Multinet.Math.Impl
             }
         }
 
-        public double nextState(double currentState, TargetFunction machine)
+        public double nextState(double runDuration, double currentState, TargetFunction machine)
         {
-            return currentState + this["step"] * machine(currentState);
+            double h = this["step"];
+            currentState = currentState + h * machine(currentState);
+            return currentState;
         }
     }
 }

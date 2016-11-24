@@ -6,9 +6,9 @@ using Multinet.Math;
 
 namespace Multinet.Net.Impl
 {
-    public class Beer1995Neuron : ANeuronImpl
+    public class Beer1995NeuronStateless : ANeuronImpl
     {
-        public Beer1995Neuron()
+        public Beer1995NeuronStateless()
         {
             this["outputgain"] = 1.0;
             this["inputgain"] = 1.0;
@@ -57,7 +57,7 @@ namespace Multinet.Net.Impl
 
             double sensorValue = target.SensorValue;
             target.SensorValue = 0;
-			double nstate =  (-state  + (s * iw + sensorValue * sw + nnet.RestInput))/(target.TimeConst != 0 ? target.TimeConst: 0.00000001);
+			double nstate =  (s * iw + sensorValue * sw + nnet.RestInput)/(target.TimeConst != 0 ? target.TimeConst: 0.00000001);
         
 			if (nstate < -100) {
 				nstate = -100;

@@ -20,6 +20,7 @@ namespace Multinet.Net
         private double state;
         private double sensorValue;
         private double timeConstant;
+        private double duration;
         private INeuronImpl neuronImpl;
         private LinkedList<Cell> income;
         private LinkedList<Cell> outcame;
@@ -32,9 +33,23 @@ namespace Multinet.Net
             this.Id = id;
             this.sensorValue = 0.0;
             this.timeConstant = 1.0;
-            this.neuronImpl = new Multinet.Net.Impl.HNeuron();
+            this.duration = 1.0;
+            this.neuronImpl = new Multinet.Net.Impl.Beer1995Neuron();
         }
         
+        public double Duration
+        {
+            get
+            {
+                return duration;
+            }
+
+            set
+            {
+                duration = value;
+            }
+        }
+
         public LinkedList<Cell> Incame
         {
             get
@@ -127,7 +142,7 @@ namespace Multinet.Net
         {
             if (Implementation.UseNumericalMethod)
             {
-                return (state = net.NumericalMethod.nextState(state, onestep));
+                return (state = net.NumericalMethod.nextState(duration, state, onestep));
             } else
             {
                 return (state = onestep(state));

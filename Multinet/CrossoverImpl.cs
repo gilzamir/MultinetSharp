@@ -16,7 +16,7 @@ namespace Multinet.Genetic
                 seed = unchecked(DateTime.Now.Ticks.GetHashCode());
             }
             last_seed = seed;
-            Random rnd = new Random();
+            Random rnd = new Random(seed);
             Genome child = new Genome();
 
             ICollection<uint> ids = gen1.GetKeys();
@@ -32,13 +32,12 @@ namespace Multinet.Genetic
                 Chromossome chr2 = gen2.GetChromossome(id);
 
                 int m = System.Math.Min(chr1.Size, chr2.Size);
-                int m2 = chr2.Size;
+                int m2 = System.Math.Max(chr1.Size, chr2.Size);
 
                 int    point = (int)rnd.Next(m);
                 
                // Console.WriteLine("POINT: {0}", point);
                 Chromossome nchr = new Chromossome();
-
                 
                 for (int i = 0; i < point; i++)
                 {

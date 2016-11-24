@@ -7,7 +7,7 @@ namespace Multinet.Math
 {
     public interface INumericalMethod
     {
-        double nextState(double currentState, TargetFunction machine);
+        double nextState(double runDuration, double currentState, TargetFunction machine);
         double this[string var]
         {
             get;

@@ -17,7 +17,7 @@ namespace Multinet.Genetic
     public interface ProblemEventHandler
     {
         void handleGaStopped(Problem source, EventType type);
-        void handleCurrentStatistic(long epoch, double[] statistic);
+        void handleCurrentStatistic(long popSize, long epoch, double[] statistic);
         void handleCurrentPopulation(long epoch, Problem p, GeneticA genetic);
         void handleEndPopulation(Problem p, GeneticA genetic);
     }
@@ -30,9 +30,9 @@ namespace Multinet.Genetic
             Console.WriteLine("Population at epoch {0} has {1} chromossomes.", epoch, genetic.PopulationSize);
         }
 
-        public void handleCurrentStatistic(long epoch, double[] statistic)
+        public void handleCurrentStatistic(long popSize, long epoch, double[] statistic)
         {
-
+            Console.WriteLine("Statistic(MINFITNESS={0}, MAXFITNESS={1}, AVG={2}", statistic[0], statistic[1], statistic[2]/popSize);
         }
 
         public void handleEndPopulation(Problem p, GeneticA genetic)
@@ -69,7 +69,7 @@ namespace Multinet.Genetic
         private StopCondiction stopCondiction;
         private ProblemEventHandler eventHandler;
 		private long epoch;
-
+        private double[] statistic;
 
 		public long Epoch {
 			get {
@@ -93,9 +93,63 @@ namespace Multinet.Genetic
             this.eventHandler = eventHandler;
         }
 
+
+        public Problem(GeneticA genetic)
+        {
+            this.evaluatorEngine = null;
+            this.geneticEngine = genetic;
+            this.stopCondiction = null;
+            this.eventHandler = null;
+        }
+
+        public void Start()
+        {
+            statistic = new double[]{ double.MaxValue, double.MinValue, 0.0 };
+            geneticEngine.init();
+
+
+            epoch = 0;
+        }
+
+        private int currentGenome = 0;
+        
+        public void StartEpoch()
+        {
+            geneticEngine.InitEvaluation(statistic);
+            currentGenome = 0;
+        }
+
+
+        public bool NextGenome(out Genome next)
+        {
+            if (currentGenome < geneticEngine.Population.Count) {
+                next = geneticEngine.Population.ElementAt(currentGenome++);
+                return true;
+            } else {
+                next = null;
+                return false;
+            }
+        }
+
+        public uint EndEpoch()
+        {
+            geneticEngine.EndEvaluation(statistic);
+            epoch++;
+            return geneticEngine.NextGeneration(statistic); //surviviors
+        }
+        
+        public double[] Statistic
+        {
+            get
+            {
+                return statistic;
+            }
+
+        }
+
         public void Run()
         {
-            double[] statistic = { double.MaxValue, double.MinValue, 0.0 };
+            statistic = new double[] { double.MaxValue, double.MinValue, 0.0 };
             geneticEngine.init();
 
 
@@ -114,7 +168,7 @@ namespace Multinet.Genetic
 
                 geneticEngine.EndEvaluation(statistic);
 
-                eventHandler.handleCurrentStatistic(epoch, statistic);
+                eventHandler.handleCurrentStatistic(n, epoch, statistic);
 
                 epoch++;
 
@@ -137,7 +191,6 @@ namespace Multinet.Genetic
                 eventHandler.handleCurrentPopulation(epoch-1, this, this.geneticEngine);
             }
             eventHandler.handleEndPopulation(this, this.geneticEngine);
-
         }
 
     }

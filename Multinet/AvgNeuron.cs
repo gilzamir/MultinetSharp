@@ -1,14 +1,15 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Multinet.Math;
 
+
 namespace Multinet.Net.Impl
 {
-    public class Beer1995Neuron : ANeuronImpl
+    public class AvgNeuron : ANeuronImpl
     {
-        public Beer1995Neuron()
+        public AvgNeuron()
         {
             this["outputgain"] = 1.0;
             this["inputgain"] = 1.0;
@@ -20,7 +21,7 @@ namespace Multinet.Net.Impl
 
         public override double GetOutput(Neuron ne)
         {
-			return   (OutputAmp * GetPotential(ne) - OutputShift) * this["outputgain"];
+            return (OutputAmp * GetPotential(ne) - OutputShift) * this["outputgain"];
         }
 
         public override double GetPotential(Neuron n)
@@ -30,7 +31,6 @@ namespace Multinet.Net.Impl
 
         public override double SetInput(Neuron ne, double inv)
         {
-            //Console.WriteLine("INPUTGAIN: {0}", this["inputgain"]);
             ne.SensorValue = inv * this["inputgain"];
             return ne.SensorValue;
         }
@@ -40,32 +40,32 @@ namespace Multinet.Net.Impl
             NeuralNet nnet = (NeuralNet)net;
             int nNeurons = net.Size;
             double s = 0;
+            int count = 0;
             double iw = this["inputweight"];
-            double sw = this["sensorweight"];
             if (iw != 0)
             {
                 foreach (Cell con in target.Incame)
                 {
                     Synapse syn = net[con.X, con.Y];
                     Neuron ne = net[syn.From];
-					double zi = ne.Implementation.GetPotential (ne);
+                    double zi = ne.Implementation.GetPotential(ne);
                     double wij = syn.Intensity;
-                    //Console.WriteLine("SYNAPSE({0}, {1}) = {2}", con.X, con.Y, wij);
                     s += wij * zi; //inputs of neuron id == column id
+                    count++;
                 }
             }
 
-            double sensorValue = target.SensorValue;
-            target.SensorValue = 0;
-			double nstate =  (-state  + (s * iw + sensorValue * sw + nnet.RestInput))/(target.TimeConst != 0 ? target.TimeConst: 0.00000001);
-        
-			if (nstate < -100) {
-				nstate = -100;
-			} else if (nstate > 100) {
-				nstate = 100;
-			}
-            //Console.WriteLine("STATE: {0}", nstate);
-			return nstate; 
-		}
+            double nstate = s / count;
+
+            if (nstate < -100)
+            {
+                nstate = -100;
+            }
+            else if (nstate > 100)
+            {
+                nstate = 100;
+            }
+            return nstate;
+        }
     }
 }

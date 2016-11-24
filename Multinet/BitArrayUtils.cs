@@ -22,7 +22,7 @@ namespace Multinet.Utils
         /// <returns>A 32-bit array that corresponds to the actual number in <code>value</code></returns>
         public static BitArray ToBitArray(double value)
         {
-            uint lvalue = (uint)(value * uint.MaxValue);
+            uint lvalue = (uint)(value *  UInt32.MaxValue);
             return ToBitArray(lvalue);
         }
 

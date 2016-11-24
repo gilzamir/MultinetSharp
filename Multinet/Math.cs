@@ -5,6 +5,30 @@ namespace Multinet.Math
     public delegate double TargetFunction(double state);
 
 
+    public sealed class Utils
+    {
+
+        private Utils() { }
+
+        public static float[] softmax(float[] output)
+        {
+            float[] sm = new float[output.Length];
+
+            double sum = 0.0f;
+            for (int i = 0; i < output.Length; i++)
+            {
+                sum += System.Math.Exp(output[i]);
+            }
+
+            for (int i = 0; i < output.Length; i++)
+            {
+                sm[i] = (float)(System.Math.Exp(output[i]) / sum);
+            }
+
+            return sm;
+        }
+    }
+
 	public sealed class PRNG {
 		private PRNG() {}
 
