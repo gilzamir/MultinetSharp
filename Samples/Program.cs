@@ -19,7 +19,7 @@ namespace Multinet.App
 
         public static void MatrixPattern()
         {
-            MatrixPatternDetectionProblem mp = new MatrixPatternDetectionProblem();
+            MatrixPatternOnlineProblem mp = new MatrixPatternOnlineProblem();
             mp.Training();
             mp.Run();
         }
