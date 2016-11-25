@@ -104,7 +104,7 @@ namespace Multinet.Sample
 
 
 
-    class PatternProblem
+    class MatrixPatternOfflineProblem
     {
         GeneticA genetic;
         PatternEvaluator evaluator = new PatternEvaluator();

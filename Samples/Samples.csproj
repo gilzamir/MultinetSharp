@@ -32,10 +32,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PatternProblem.cs" />
+    <Compile Include="MatrixPatternOfflineProblem.cs" />
     <Compile Include="XORProblem.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="MatrixPatternDetectionProblem.cs" />
+    <Compile Include="MatrixPatternOnlineProblem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

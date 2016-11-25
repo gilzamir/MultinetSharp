@@ -12,7 +12,7 @@ using System.IO;
 
 namespace Multinet.Sample
 {
-	public class MatrixPatternDetectionProblem
+	public class MatrixPatternOnlineProblem
 	{
 
         private static Random rnd = new Random();
@@ -26,7 +26,7 @@ namespace Multinet.Sample
         private GeneticA genetic;
         private Genome currentGenome;
 
-		public MatrixPatternDetectionProblem ()
+		public MatrixPatternOnlineProblem ()
 		{
             genetic = new GeneticA(200, 0.005);
             genetic.Translator = (Genome gen) => {

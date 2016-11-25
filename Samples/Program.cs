@@ -98,7 +98,7 @@ namespace Multinet.App
         public static void Pattern()
         {
 
-            PatternProblem problem = new PatternProblem();
+            MatrixPatternOfflineProblem problem = new MatrixPatternOfflineProblem();
             problem.Run();
         }
 

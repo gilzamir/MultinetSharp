@@ -50,11 +50,10 @@ namespace Multinet.Net.Ext
 		private static uint chrNeuronIdx = 0;
 
         public CreateParametersHandler createParametersHandler = (HIRON3 hiron) => {
-            hiron.net.NumericalMethod = new Math.Impl.EulerMethod();
-            hiron.net.NumericalMethod["step"] = 0.5;
+            //hiron.net.NumericalMethod = new Math.Impl.EulerMethod();
+            //hiron.net.NumericalMethod["step"] = 0.5;
         };
-
-
+        
 		public ConfigureNeuronHandler configureNeuronHandler = (HIRON3 hiron, int id, NeuronType type) => {
 			double gain;
             
