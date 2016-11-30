@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Multinet.Net;
 using Multinet.Genetic;
 using Multinet.Utils;
@@ -222,7 +221,7 @@ namespace Multinet.Sample
 
             pop.Sort();
 
-			Genome last = pop.ElementAt(pop.Count-1);
+			Genome last = pop[pop.Count-1];
 			last.Serialize ("genome.bin");
 		}
 

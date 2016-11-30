@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Multinet.Net;
 using Multinet.Genetic;
 using Multinet.Utils;
@@ -8,8 +7,6 @@ using Multinet.Net.Impl;
 
 namespace Multinet.Sample
 {
-
-
 	using rnd = Multinet.Math.PRNG;
 
     public class PatternEvaluator : Evaluator
@@ -116,7 +113,7 @@ namespace Multinet.Sample
             return problem.Epoch >= 1000;
 		}
 
-        public PatternProblem()
+        public MatrixPatternOfflineProblem()
         {
             genetic = new GeneticA(500);
             genetic.Elitism = 1;

@@ -122,6 +122,15 @@ namespace Multinet.Net.Ext
 			}
 		};
 
+        public Genome Genotype
+        {
+            get
+            {
+                return genotype;
+            }
+        }
+
+            
 		private static uint chrSynIdx = 0;
 		public ConfigureSynapseHandler ConfigureSynapseHandler = (HIRON3 hiron, Synapse syn, 
 			NeuronType fromType, NeuronType toType) => {
@@ -190,6 +199,22 @@ namespace Multinet.Net.Ext
                     Synapse syn = net.CreateSynapse(hidden[i], output[j], 0);
                     this.ConfigureSynapseHandler(this, syn, NeuronType.HIDDEN, NeuronType.OUTPUT);
                 }
+            }
+        }
+
+        public int CountNeurons
+        {
+            get
+            {
+                return neurons;
+            }
+        }
+
+        public int CountSynapses
+        {
+            get
+            {
+                return this.synapses;
             }
         }
 	}
